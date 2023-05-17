@@ -22,13 +22,13 @@ spec:
           image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
           ports:
             - containerPort: {{ .Values.spec.port }}
-{{/*          livenessProbe:*/}}
-{{/*            httpGet:*/}}
-{{/*              port: http*/}}
-{{/*              path: /hcs*/}}
-{{/*            initialDelaySeconds: 40*/}}
-{{/*            periodSeconds: 15*/}}
-{{/*            timeoutSeconds: 30*/}}
+          livenessProbe:
+            httpGet:
+              port: 8080
+              path: /hcs
+            initialDelaySeconds: 40
+            periodSeconds: 15
+            timeoutSeconds: 30
       serviceAccountName: pods-service-account
 
         # resources:
