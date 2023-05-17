@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.appName }}
+spec:
+  replicas: {{ .Values.spec.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+      tier: {{ .Values.metadata.tier }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}
+        tier: {{ .Values.metadata.tier }}
+    spec: # Pod spec
+      containers:
+        - name: {{ .Values.spec.containerName }}
+          image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.spec.port }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.configmap.name }}
+          livenessProbe:
+            httpGet:
+              port: http
+              path: /hcs
+            initialDelaySeconds: 40
+            periodSeconds: 15
+            timeoutSeconds: 30
+      serviceAccountName: pods-service-account
+
+        # resources:
+        #   requests:
+        #     memory: "16Mi"
+        #     cpu: "50m"    # 500milliCPUs (1/2 CPU)
+        #   limits:
+        #     memory: "128Mi"
+        #     cpu: "100m"
