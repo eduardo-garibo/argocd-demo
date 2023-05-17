@@ -1,0 +1,66 @@
+appName: versa-application
+
+metadata:
+  tier: frontend
+
+spec:
+  containerName: versa-application
+  port: 8080
+  targetPort: 8080
+  replicas: 1
+  hpaName: versa-application-hpa
+
+namespace: dev
+
+configmap:
+  name: versa-configmap
+  data:
+    HEADER: 'Versa application deployed using helm'
+
+image:
+  name: 110537001398.dkr.ecr.us-east-1.amazonaws.com/tyler/versa-infra
+  tag: latest
+
+service:
+  serviceName: versa-service
+  type: NodePort
+
+hpa:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
+
+ingress:
+  enabled: true
+
+obsidian:
+  name: obsidian-scheduler
+  image: 110537001398.dkr.ecr.us-east-1.amazonaws.com/tyler-obsidian
+  tag: latest
+  containerName: obsidian-scheduler
+  replicas: 1
+  serviceName: obsidian-service
+  port: 8081
+  targetPort: 8080
+  hpaName: obsidian-application-hpa
+
+vo:
+  name: vo-application
+  image: 110537001398.dkr.ecr.us-east-1.amazonaws.com/tylerfederal/vo
+  tag: latest
+  replicas: 1,
+  serviceName: vo-service
+  port: 8082
+  targetPort: 8080
+  hpaName: vo-application-hpa
+
+idm:
+  name: dmi-application
+  image: 110537001398.dkr.ecr.us-east-1.amazonaws.com/tylerfederal/dmi
+  tag: latest
+  replicas: 1
+  serviceName: dmi-service
+  port: 8083
+  targetPort: 8080
+  hpaName: idm-application-hpa
