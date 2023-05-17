@@ -22,16 +22,13 @@ spec:
           image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
           ports:
             - containerPort: {{ .Values.spec.port }}
-          envFrom:
-            - configMapRef:
-                name: {{ .Values.configmap.name }}
-          livenessProbe:
-            httpGet:
-              port: http
-              path: /hcs
-            initialDelaySeconds: 40
-            periodSeconds: 15
-            timeoutSeconds: 30
+{{/*          livenessProbe:*/}}
+{{/*            httpGet:*/}}
+{{/*              port: http*/}}
+{{/*              path: /hcs*/}}
+{{/*            initialDelaySeconds: 40*/}}
+{{/*            periodSeconds: 15*/}}
+{{/*            timeoutSeconds: 30*/}}
       serviceAccountName: pods-service-account
 
         # resources:
