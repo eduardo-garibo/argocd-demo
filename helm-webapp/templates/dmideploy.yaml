@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.idm.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.idm.name }}
+spec:
+  replicas: {{ .Values.idm.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.idm.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.idm.name }}
+    spec: # Pod spec
+      containers:
+        - name: {{ .Values.idm.name }}
+          image: "{{ .Values.idm.image }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.spec.port }}
+      serviceAccountName: pods-service-account
+
