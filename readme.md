@@ -1,9 +1,4 @@
 
-
-# Follow this video to be a ArgoCD Boss
-https://youtu.be/JLrR9RV9AFA
-
-
 # Installing latest/stable version of ArgoCD
 ```
 kubectl create namespace argocd
@@ -19,21 +14,6 @@ kubectl port-forward service/argocd-server -n argocd 8080:443
 ### Get Credentials
 ```
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
-```
-
-# Install ArgoCD CLI / Login via CLI
-```
-brew install argocd
-kubectl port-forward svc/argocd-server -n argocd 8080:443
-argocd login 127.0.0.1:8080
-```
-
-# Creating an Application using ArgoCD CLI:
-```
-argocd app create webapp-kustom-prod \
---repo https://github.com/devopsjourney1/argo-examples.git \
---path kustom-webapp/overlays/prod --dest-server https://kubernetes.default.svc \
---dest-namespace prod
 ```
 
 # Command Cheat sheet
