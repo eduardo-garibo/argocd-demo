@@ -59,7 +59,7 @@ idm:
   name: dmi-application
   image: 110537001398.dkr.ecr.us-east-1.amazonaws.com/tylerfederal/dmi
   tag: latest
-  replicas: 1
+  replicas: 2
   serviceName: dmi-service
   port: 8083
   targetPort: 8080
